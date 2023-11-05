@@ -17,12 +17,11 @@ class Rock:
     def update(self):
         if self.is_moving == True:
             # 이미지의 위치를 업데이트합니다.
-            self.rect.x += self.dx
+            # self.rect.x += self.dx
             self.rect.y += self.dy
         # 화면 밖으로 나갔는지 확인
         if self.rect.top > screen_rect.bottom:
             self.is_moving = False
-            print(self)
             del self
 
     def draw(self):
@@ -70,6 +69,7 @@ class Fighter:
     def update(self):
         if self.is_moving == True:
             keys = pygame.key.get_pressed()
+            # 방향키 입력 확인
             if keys[pygame.K_LEFT]:
                 self.rect.x -= self.dx
             if keys[pygame.K_RIGHT]:
@@ -89,21 +89,10 @@ class Fighter:
                 self.rect.y += self.dy
 
 class Explosion:
-    def __init__(self, rock):
+    def __init__(self):
         # 이미지 스케일
         self.img = explosion_image
         self.img = pygame.transform.scale(self.img, (100, 100))
-        
-        # 돌이 터질 경우의 rect값
-        self.rect_rock = self.img.get_rect()
-        self.rect_rock.center = rock.rect.center
-        self.rock_holding_time = time.time()
-
-        # 전투기가 터질 경우의 rect값
-        self.rect_fighter = self.img.get_rect()
-        self.rect_fighter.center = Fighter().rect.center
-        self.fighter_holding_time = time.time()
-        
         self.is_moving = True
         
     # 폭발 이미지 출력
@@ -168,7 +157,7 @@ def missile_rock_collision(missile_list, rock_list):
             if rock.rect.colliderect(missile.rect):
                 missile.is_moving = False
                 rock.is_moving = False
-                Explosion(rock).draw_explode_image(rock)
+                Explosion().draw_explode_image(rock)
 
                 # rock과 missile 없애기
                 missile_list.remove(missile)
@@ -176,5 +165,6 @@ def missile_rock_collision(missile_list, rock_list):
                 rock_list.remove(rock)
                 return True
 
+# The End 출력
 def end_text():
     draw_text(screen, "THE END", font_size=100, color=(0, 255, 0))
