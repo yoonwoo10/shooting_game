@@ -167,4 +167,4 @@ def missile_rock_collision(missile_list, rock_list):
 
 # The End 출력
 def end_text():
-    draw_text(screen, "THE END", font_size=100, color=(0, 255, 0))
+    draw_text(screen, "게임 종료", font_size=100, color=(0, 255, 0))
