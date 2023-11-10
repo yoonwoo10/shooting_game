@@ -31,7 +31,7 @@ class Rock:
 
 class Missile:
     def __init__(self, fighter_1):
-      self.dy = game_level + 5
+      self.dy = 5
       self.img = missile_image
       self.img = pygame.transform.scale(self.img, (30, 90))
       self.rect = self.img.get_rect()

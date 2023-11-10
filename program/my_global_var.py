@@ -50,7 +50,6 @@ rocks = [rock_1, rock_2, rock_3, rock_4]
 
 # 난이도
 game_level = 0.5
-level_adjust_time = time.time()
 
 # 암석 출현 빈도
 rock_prob = 10

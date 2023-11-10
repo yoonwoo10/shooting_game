@@ -7,11 +7,14 @@ FPS = 60
 total_rocks = []
 rock_generated_time = time.time()
 mgt = time.time()   #missile_generated_time
+rdt = 3-game_level    #rock_delay_time 암석 생성 지연
 m_duration = 0.3
+level_adjust_time = time.time()
 
 def main():
     global missiles, rock_generated_time
     fighter = Fighter()
+    print(total_rocks)
     while running:
         end_game()
         # 배경 출력
@@ -19,9 +22,12 @@ def main():
         # 남은 파괴해야 할 운석 개수
         draw_text(screen, "남은 운석 : {}".format(int(globals()["game_level"]*2 - len(globals()["dead_rock_list"]))))
         # 남은 시간 출력하기
-        level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 + 15))
+        level_adjust_timer = timer(level_adjust_time, int(globals()["game_level"] * 2 + 15))
         if level_adjust_timer != None:
             draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=40, color=(255, 0, 0), font="notosanskrextrabold")
+            if level_adjust_timer <= 0.8:   #level_adjust_time 조정
+                globals()["level_adjust_time"] = time.time()
+            
         # 게임 종료
         else:
             while running:
@@ -45,7 +51,7 @@ def main():
         # 미사일 missiles 리스트에 추가
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
-            if time.time() - globals()["mgt"] > m_duration:
+            if time.time() - globals()["mgt"] > 0.3:    # 미사일 생성 제한시간
                 missiles.append(Missile(fighter))
                 globals()["mgt"] = time.time()
                 
@@ -56,13 +62,13 @@ def main():
         
         # 운석 랜덤 출력하기
         if len(globals()["dead_rock_list"]) < (globals()["game_level"] * 2):
-            if (3 - game_level) > 0:
+            if globals()["rdt"] > 0.3:
                 if (time.time() - rock_generated_time) > (3 - game_level):
                     total_rocks.append(Rock())
                     rock_generated_time = time.time()
                     globals()["m_duration"] -= 0.03
             else:
-                pass
+                globals()["rdt"] = 0.3
 
         # rock 충돌 감지
         # 게임 종료 조건
@@ -79,7 +85,6 @@ def main():
             rock.update()
             rock.draw()
 
-        print(len(dead_rock_list))
         update(60)
 
 # 게임 시작
@@ -133,6 +138,5 @@ while running:
         break
     
 # 본격 게임 시작!
-    level_adjust_time = time.time()
     while running:
         main()
