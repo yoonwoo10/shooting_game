@@ -10,15 +10,17 @@ class Rock:
         self.rect = self.img.get_rect()
         self.rect.x = random.randrange(0, WIDTH - self.img.get_width())
         self.rect.bottom = random.randrange(0, HEIGHT // 4)
-        self.dx = 0
-        self.dy = game_level + 3
         self.is_moving = True
-
+        self.dy = 0
+        
     def update(self):
         if self.is_moving == True:
+            if self.dy > 10:
+                self.dy = 10
             # 이미지의 위치를 업데이트합니다.
             # self.rect.x += self.dx
             self.rect.y += self.dy
+            
         # 화면 밖으로 나갔는지 확인
         if self.rect.top > screen_rect.bottom:
             self.is_moving = False
@@ -31,7 +33,7 @@ class Rock:
 
 class Missile:
     def __init__(self, fighter_1):
-      self.dy = 30
+      self.dy = 40
       self.img = missile_image
       width = WIDTH//16
       height = width * 3
@@ -63,7 +65,7 @@ class Fighter:
         self.rect = self.img.get_rect()
         self.rect.center = ((WIDTH // 2, HEIGHT // 3 * 2))
         self.is_moving = True
-        self.dx = WIDTH // 48
+        self.dx = 20
         self.dy = self.dx
 
     def draw(self):
@@ -71,6 +73,9 @@ class Fighter:
             screen.blit(self.img, self.rect)
     
     def update(self):
+        if self.dx > 30:
+            self.dx = 30
+            self.dy = self.dx
         if self.is_moving == True:
             keys = pygame.key.get_pressed()
             # 방향키 입력 확인

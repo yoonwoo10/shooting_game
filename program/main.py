@@ -7,7 +7,6 @@ FPS = 60
 total_rocks = []
 rock_generated_time = time.time()
 mgt = time.time()   #missile_generated_time
-rdt = 3-game_level    #rock_delay_time 암석 생성 지연
 rtd = game_level * 2
 
 def main():
@@ -20,7 +19,10 @@ def main():
         # 남은 파괴해야 할 운석 개수
         draw_text(screen, "남은 운석 : {}".format(int(globals()["game_level"]*2 - len(globals()["dead_rock_list"]))))
         # 남은 시간 조절하기
-        level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 * 5))
+        level_left_time = int(globals()["game_level"] * 2 * 5)
+        if level_left_time > 30:
+            level_left_time = 30
+        level_adjust_timer = timer(globals()["level_adjust_time"], level_left_time)
         # 남은 시간 출력하기
         if level_adjust_timer != None:
             draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=WIDTH//12, color=(255, 0, 0))
@@ -42,13 +44,15 @@ def main():
             globals()["level_adjust_time"] = time.time()
         # 운석 랜덤 출력하기
         else:
-            if globals()["rdt"] > 0.3:
+            rdt = 1-0.1*(globals()["game_level"]*2)    #rock_delay_time 암석 생성 지연
+            if rdt < 0:
+                rdt = 0.3
+            # 운석 개수 제한하기
+            if len(total_rocks) < 10:
                 if (time.time() - rock_generated_time) > (rdt):
                     total_rocks.append(Rock())
                     rock_generated_time = time.time()
-            else:
-                globals()["rdt"] = 0.3
-
+            
         # 전투기 출력
         fighter.update()
         fighter.draw()            
@@ -77,6 +81,7 @@ def main():
         missile_rock_collision(missiles, total_rocks)            
         # rock 업데이트
         for rock in total_rocks:
+            rock.dy = globals()["game_level"] * 2 * 3
             rock.update()
             rock.draw()
 
