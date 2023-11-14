@@ -32,7 +32,7 @@ class Rock:
 
 class Missile:
     def __init__(self, fighter_1):
-      self.dy = 5
+      self.dy = 30
       self.img = missile_image
       width = WIDTH//16
       height = width * 3
