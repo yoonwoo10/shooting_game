@@ -1,3 +1,4 @@
+
 from my_global_var import *
 import time
 import math
@@ -6,7 +7,7 @@ import math
 class Rock:
     def __init__(self):
         self.img = random.choice(rocks)
-        self.img = pygame.transform.scale(self.img, (100, 100))
+        self.img = pygame.transform.scale(self.img, (WIDTH//5, WIDTH//5))
         self.rect = self.img.get_rect()
         self.rect.x = random.randrange(0, WIDTH - self.img.get_width())
         self.rect.bottom = random.randrange(0, HEIGHT // 4)
@@ -33,7 +34,9 @@ class Missile:
     def __init__(self, fighter_1):
       self.dy = 5
       self.img = missile_image
-      self.img = pygame.transform.scale(self.img, (30, 90))
+      width = WIDTH//16
+      height = width * 3
+      self.img = pygame.transform.scale(self.img, (width, height))
       self.rect = self.img.get_rect()
       self.rect.center = fighter_1.rect.center
       self.is_moving = True
@@ -55,12 +58,14 @@ class Missile:
 class Fighter:
     def __init__(self):
         self.img = spaceship_image
-        self.img = pygame.transform.scale(self.img, (120, 120))
+        width = WIDTH // 4
+        height = width
+        self.img = pygame.transform.scale(self.img, (width, height))
         self.rect = self.img.get_rect()
         self.rect.center = ((WIDTH // 2, HEIGHT // 3 * 2))
         self.is_moving = True
-        self.dx = 10
-        self.dy = 10
+        self.dx = WIDTH // 48
+        self.dy = self.dx
 
     def draw(self):
         if self.is_moving == True:
@@ -85,23 +90,25 @@ class Fighter:
                 self.rect.x -= self.dx
             if self.rect.bottom > screen_rect.bottom:
                 self.rect.y -= self.dy
-            if self.rect.top < screen_rect.top:
+            # 전투기 돌 생성 범위 위로 못 올라가게 하기
+            if self.rect.top < HEIGHT//4*1.5:
                 self.rect.y += self.dy
+
 
 class Explosion:
     def __init__(self):
         # 이미지 스케일
         self.img = explosion_image
-        self.img = pygame.transform.scale(self.img, (100, 100))
+        self.img = pygame.transform.scale(self.img, (WIDTH//4, WIDTH//4))
         self.is_moving = True
-        
+
     # 폭발 이미지 출력
     def draw_explode_image(self, obj):
         screen.blit(self.img, obj.rect)
 
 # 함수들
 # 텍스트 출력 함수
-def draw_text(screen, text: str, pos:tuple = (WIDTH // 2, HEIGHT // 2), font = "notosanskrmedium", font_size = 30, color:tuple = (255, 255, 0)):
+def draw_text(screen, text: str, pos:tuple = (WIDTH // 2, HEIGHT // 2), font = "nanumgothic", font_size = WIDTH//8, color:tuple = (255, 255, 0)):
     font = pygame.font.SysFont(font, font_size)
     text_obj = font.render(text, True, color)
     text_rect = text_obj.get_rect()
@@ -120,7 +127,7 @@ def end_screen():
     img = background_image
     img = pygame.transform.scale(img, SIZE)
     screen.blit(img, (0, 0))
-    draw_text(screen, "게임 오버", (WIDTH // 2, HEIGHT // 2), "notosanskrmedium", 100)
+    draw_text(screen, "게임 오버", (WIDTH // 2, HEIGHT // 2), "nanumgothic", 100)
     draw_text(screen, "다시 시작하려면 엔터 키를 누르세요", (WIDTH // 2, HEIGHT // 2 + 30))
 
 # 화면 업데이트 함수
@@ -167,4 +174,4 @@ def missile_rock_collision(missile_list, rock_list):
 
 # The End 출력
 def end_text():
-    draw_text(screen, "게임 종료", font_size=100, color=(0, 255, 0))
+    draw_text(screen, "게임 종료", font_size=WIDTH//4.8, color=(0, 255, 0))

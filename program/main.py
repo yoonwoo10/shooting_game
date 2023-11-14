@@ -22,7 +22,7 @@ def main():
         # 남은 시간 출력하기
         level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 + 15))
         if level_adjust_timer != None:
-            draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=40, color=(255, 0, 0), font="notosanskrextrabold")
+            draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=WIDTH//12, color=(255, 0, 0), font="notosanskrextrabold")
         # 게임 종료
         else:
             while running:
@@ -80,7 +80,7 @@ def main():
             rock.update()
             rock.draw()
 
-        update(60)
+        update(120)
 
 # 게임 시작
 while running:
@@ -88,8 +88,8 @@ while running:
     end_game()
     # 메뉴 화면 출력
     menu_screen()
-    draw_text(screen, "환영합니다!", pos = (WIDTH // 2, HEIGHT // 2 - 30), font_size = 80)
-    draw_text(screen, "게임을 시작하려면 스페이스 바를 눌러주세요", pos = (WIDTH // 2, HEIGHT // 2 +50), color = (175, 244, 45), font_size=20)
+    draw_text(screen, "환영합니다!", pos = (WIDTH // 2, HEIGHT // 2 - 30), font_size=WIDTH//10)
+    draw_text(screen, "게임을 시작하려면 스페이스 바를 눌러주세요", pos = (WIDTH // 2, HEIGHT // 2 + HEIGHT//14.4), font_size=WIDTH//20, color = (175, 244, 45))
         
     # 화면 업데이트
     update(60)
@@ -127,7 +127,7 @@ while running:
     while running:
         end_game()
         menu_screen()
-        draw_text(screen, "시작!", font_size=50)
+        draw_text(screen, "시작!", font_size=WIDTH//8)
         update(60)
         time.sleep(1)
         break

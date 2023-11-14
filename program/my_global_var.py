@@ -13,29 +13,29 @@ def relative_path(image_path):
 
 # 이미지 파일들 호출
 # rocks
-rock_1 = pygame.image.load(relative_path(".\이미지 파일\Rock_1.png"))
-rock_2 = pygame.image.load(relative_path(".\이미지 파일\Rock_2.png"))
-rock_3 = pygame.image.load(relative_path(".\이미지 파일\Rock_3.png"))
-rock_4 = pygame.image.load(relative_path(".\이미지 파일\Rock_4.png"))
+rock_1 = pygame.image.load(relative_path("이미지 파일/Rock_1.png"))
+rock_2 = pygame.image.load(relative_path("이미지 파일/Rock_2.png"))
+rock_3 = pygame.image.load(relative_path("이미지 파일/Rock_3.png"))
+rock_4 = pygame.image.load(relative_path("이미지 파일/Rock_4.png"))
 
 # 배경
-background_image = pygame.image.load(relative_path(".\이미지 파일\space.png"))
+background_image = pygame.image.load(relative_path("이미지 파일/space.png"))
 
 # 우주선
-spaceship_image = pygame.image.load(relative_path(".\이미지 파일\spaceship.png"))    # 비율이 1:1
+spaceship_image = pygame.image.load(relative_path("이미지 파일/spaceship.png"))    # 비율이 1:1
 
 # 미사일
-missile_image = pygame.image.load(relative_path(".\이미지 파일\missile.png"))
+missile_image = pygame.image.load(relative_path("이미지 파일/missile.png"))
 
 # 체력
-hp_image = pygame.image.load(relative_path(".\이미지 파일\hp.png"))
+hp_image = pygame.image.load(relative_path("이미지 파일/hp.png"))
 
 # 폭발
-explosion_image = pygame.image.load(relative_path(".\이미지 파일\explosion_1.png"))
+explosion_image = pygame.image.load(relative_path("이미지 파일/explosion_1.png"))
 
 # 화면 생성
-WIDTH = 480
-HEIGHT = 720
+WIDTH = 1080
+HEIGHT = 540*3
 SIZE = WIDTH, HEIGHT
 screen = pygame.display.set_mode(SIZE)
 screen_rect = screen.get_rect()
