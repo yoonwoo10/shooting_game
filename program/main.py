@@ -22,7 +22,7 @@ def main():
         # 남은 시간 출력하기
         level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 + 15))
         if level_adjust_timer != None:
-            draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=WIDTH//12, color=(255, 0, 0), font="notosanskrextrabold")
+            draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=WIDTH//12, color=(255, 0, 0))
         # 게임 종료
         else:
             while running:
