@@ -1,4 +1,3 @@
-
 from my_global_var import *
 import time
 import math
@@ -12,7 +11,7 @@ class Rock:
         self.rect.x = random.randrange(0, WIDTH - self.img.get_width())
         self.rect.bottom = random.randrange(0, HEIGHT // 4)
         self.dx = 0
-        self.dy = game_level + 2
+        self.dy = game_level + 3
         self.is_moving = True
 
     def update(self):
@@ -174,4 +173,4 @@ def missile_rock_collision(missile_list, rock_list):
 
 # The End 출력
 def end_text():
-    draw_text(screen, "게임 종료", font_size=WIDTH//4.8, color=(0, 255, 0))
+    draw_text(screen, "게임 종료", font_size=int(WIDTH//4.8), color=(0, 255, 0))

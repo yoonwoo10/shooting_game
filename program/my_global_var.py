@@ -76,5 +76,5 @@ missiles = []
 # 죽은 객체들
 dead_rock_list = []  # 돌들
 
-# 남은 운석 개수
-rock_to_destroy = 0
+# 없애야 할 운석들
+rtd = 0 #rocks_to_destroy

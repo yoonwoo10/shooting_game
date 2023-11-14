@@ -8,7 +8,7 @@ total_rocks = []
 rock_generated_time = time.time()
 mgt = time.time()   #missile_generated_time
 rdt = 3-game_level    #rock_delay_time 암석 생성 지연
-m_duration = 0.3
+rtd = game_level * 2
 
 def main():
     global missiles, rock_generated_time
@@ -19,8 +19,9 @@ def main():
         menu_screen()
         # 남은 파괴해야 할 운석 개수
         draw_text(screen, "남은 운석 : {}".format(int(globals()["game_level"]*2 - len(globals()["dead_rock_list"]))))
+        # 남은 시간 조절하기
+        level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 * 5))
         # 남은 시간 출력하기
-        level_adjust_timer = timer(globals()["level_adjust_time"], int(globals()["game_level"] * 2 + 15))
         if level_adjust_timer != None:
             draw_text(screen, "남은 시간 : {}".format(level_adjust_timer), (WIDTH // 2, HEIGHT // 10 * 9), font_size=WIDTH//12, color=(255, 0, 0))
         # 게임 종료
@@ -38,6 +39,15 @@ def main():
             globals()["game_level"] += 0.5
             globals()["dead_rock_list"].clear()
             print("cleared")
+            globals()["level_adjust_time"] = time.time()
+        # 운석 랜덤 출력하기
+        else:
+            if globals()["rdt"] > 0.3:
+                if (time.time() - rock_generated_time) > (rdt):
+                    total_rocks.append(Rock())
+                    rock_generated_time = time.time()
+            else:
+                globals()["rdt"] = 0.3
 
         # 전투기 출력
         fighter.update()
@@ -54,16 +64,6 @@ def main():
         for missile in missiles:
             missile.update()
             missile.draw()
-        
-        # 운석 랜덤 출력하기
-        if len(globals()["dead_rock_list"]) < (globals()["game_level"] * 2):
-            if globals()["rdt"] > 0.3:
-                if (time.time() - rock_generated_time) > (3 - game_level):
-                    total_rocks.append(Rock())
-                    rock_generated_time = time.time()
-                    globals()["m_duration"] -= 0.03
-            else:
-                globals()["rdt"] = 0.3
 
         # rock 충돌 감지
         # 게임 종료 조건
@@ -134,4 +134,5 @@ while running:
     
 # 본격 게임 시작!
     while running:
+        level_adjust_time = time.time()
         main()
