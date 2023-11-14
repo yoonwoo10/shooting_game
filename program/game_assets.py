@@ -65,7 +65,7 @@ class Fighter:
         self.rect = self.img.get_rect()
         self.rect.center = ((WIDTH // 2, HEIGHT // 3 * 2))
         self.is_moving = True
-        self.dx = 20
+        self.dx = 25
         self.dy = self.dx
 
     def draw(self):
@@ -94,8 +94,7 @@ class Fighter:
                 self.rect.x -= self.dx
             if self.rect.bottom > screen_rect.bottom:
                 self.rect.y -= self.dy
-            # 전투기 돌 생성 범위 위로 못 올라가게 하기
-            if self.rect.top < HEIGHT//4*1.5:
+            if self.rect.top < 0:
                 self.rect.y += self.dy
 
 
