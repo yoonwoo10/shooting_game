@@ -28,7 +28,7 @@ def main():
             while running:
                 end_game()
                 menu_screen()
-                end_text()    
+                draw_text(screen, "시간 종료", color=(0, 255, 255))
                 update(10)
         # 레벨 출력하기
         draw_text(screen, "level{}".format(int(globals()["game_level"] * 2)), (WIDTH // 2, HEIGHT // 8))
@@ -114,10 +114,10 @@ while running:
 
         # 타이머 출력
         timer_1 = timer(start_time, 3)
-        draw_text(screen, str(timer_1))
-
+        if timer_1 != None:
+            draw_text(screen, str(timer_1))
         # 타이머 종료 조건
-        if timer_1 == None:
+        else:
             running = False
         
         update(60)
